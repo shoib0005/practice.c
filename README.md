@@ -120,35 +120,3 @@ int main() {
 
     return 0;
 }
-// 9: Write a program to calculate simple and compound interest for given principal, rate, and time.
-
-#include <stdio.h>
-#include<math.h>
-int main() {
-    float p, r, t;   // p=principle; r=rate; t=time
-    printf("enter p : ");
-    scanf("%f", &p);
-    printf("enter r : ");
-    scanf("%f", &r);
-    printf("enter t : ");
-    scanf("%f", &t);
-    printf("simple interest : %f\n", (p*r*t/100));
-    printf("compound interest : %f\n", (p*pow((1+r/100),t)));
-    return 0;
-}
-// 10: Online C compiler to run C program online
-#include <stdio.h>
-
-int main() {
-   int h, m, s;  // h = hours; m = minutes; s = seconds
-   printf("enter s : ");
-   scanf("%d", &s);
-   h = s / 3600;
-   s = s % 3600;
-   m = s / 60;
-   s = s % 60;
-   printf("t = %02d:%02d:%02d\n", h,m,s);
-   
-   
-    return 0;
-}
