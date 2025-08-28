@@ -1,4 +1,4 @@
-Sum of two numbers
+// 1:Sum of two numbers
 #include <stdio.h>
 int main() {
     int a, b;
