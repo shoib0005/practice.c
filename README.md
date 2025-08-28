@@ -120,20 +120,24 @@ int main() {
 
     return 0;
 }
-
-// 10: Online C compiler to run C program online
 #include <stdio.h>
 
 int main() {
-   int h, m, s;  // h = hours; m = minutes; s = seconds
-   printf("enter s : ");
-   scanf("%d", &s);
-   h = s / 3600;
-   s = s % 3600;
-   m = s / 60;
-   s = s % 60;
-   printf("t = %02d:%02d:%02d\n", h,m,s);
-   
-   
+    int total_seconds, h, m, s;
+    
+    printf("Enter total seconds: ");
+    scanf("%d", &total_seconds);
+
+    if (total_seconds < 0) {
+        printf("Please enter a non-negative number.\n");
+        return 1;
+    }
+
+    h = total_seconds / 3600;
+    m = (total_seconds % 3600) / 60;
+    s = total_seconds % 60;
+
+    printf("Time = %02d:%02d:%02d\n", h, m, s);
+
     return 0;
 }
