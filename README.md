@@ -137,4 +137,3 @@ int main() {
     printf("compound interest : %f\n", (p*pow((1+r/100),t)));
     return 0;
 }
-
