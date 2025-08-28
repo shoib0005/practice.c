@@ -107,4 +107,34 @@ int main () {
     
        return 0;
 }
+// 8: Write a program to find and display the sum of the first n natural numbers.
+
+#include <stdio.h>
+int main() {
+    int n, sum=0;
+    printf("enter n : ");
+    scanf("%d", &n);
+    for(int i=1; i<=n; i++) {
+        sum = sum +i;
+        printf("their sum is : %d\n", sum);
+    }
+
+    return 0;
+}
+// 9: Write a program to calculate simple and compound interest for given principal, rate, and time.
+
+#include <stdio.h>
+#include<math.h>
+int main() {
+    float p, r, t;   // p=principle; r=rate; t=time
+    printf("enter p : ");
+    scanf("%f", &p);
+    printf("enter r : ");
+    scanf("%f", &r);
+    printf("enter t : ");
+    scanf("%f", &t);
+    printf("simple interest : %f\n", (p*r*t/100));
+    printf("compound interest : %f\n", (p*pow((1+r/100),t)));
+    return 0;
+}
 
