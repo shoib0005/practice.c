@@ -27,3 +27,128 @@ int main () {
     
        return 0;
 }
+// 3: Write a program to calculate the area and perimeter of a rectangle given its length and breadth.
+
+#include<stdio.h>
+int main () {
+    int l, b;
+    printf("enter l : ");
+    scanf("%d", &l);
+    printf("enter b : ");
+    scanf("%d", &b);
+    
+    printf("perimeter is %d\n", 2*(l+b));
+    printf("area is %d\n", l*b);
+   
+    
+       return 0;
+}
+// 4: Write a program to calculate the area and circumference of a circle given its radius.
+
+#include<stdio.h>
+int main () {
+    float r;  // r= radius;
+    printf("enter r : ");
+    scanf("%f", &r);
+   
+    printf("circumference is %f\n", (2*3.14*r));
+    printf("area is %f\n", (3.14*r*r));
+   
+    
+       return 0;
+}
+// 5: Write a program to convert temperature from Celsius to Fahrenheit
+
+#include<stdio.h>
+int main () {
+    float c;  // c = celsius;
+    printf("enter c : ");
+    scanf("%f", &c);
+   
+    printf("temperature in fahrenheit is  %f\n", (c*9/5+32));
+
+   
+    
+       return 0;
+}
+// 6: Write a program to swap two numbers using a third variable
+
+#include<stdio.h>
+int main () {
+    int a, b;  
+    printf("enter a : ");
+    scanf("%d", &a);
+    printf("enter b : ");
+    scanf("%d", &b);
+     
+     int c = a;
+     a = b;
+     b = c;
+    printf(" a = %d\n", a);
+    printf(" b = %d\n", b);
+    
+       return 0;
+}
+// 7: Write a program to swap two numbers without using a third variable
+
+#include<stdio.h>
+int main () {
+    int a, b;  
+    printf("enter a : ");
+    scanf("%d", &a);
+    printf("enter b : ");
+    scanf("%d", &b);
+     
+     a = a + b;
+     b = a - b;
+     a = a - b;
+    printf(" a = %d\n", a);
+    printf(" b = %d\n", b);
+    
+       return 0;
+}// 8: Write a program to find and display the sum of the first n natural numbers.
+
+#include <stdio.h>
+int main() {
+    int n, sum=0;
+    printf("enter n : ");
+    scanf("%d", &n);
+    for(int i=1; i<=n; i++) {
+        sum = sum +i;
+        printf("their sum is : %d\n", sum);
+    }
+
+    return 0;
+}
+// 9: Write a program to calculate simple and compound interest for given principal, rate, and time.
+
+#include <stdio.h>
+#include<math.h>
+int main() {
+    float p, r, t;   // p=principle; r=rate; t=time
+    printf("enter p : ");
+    scanf("%f", &p);
+    printf("enter r : ");
+    scanf("%f", &r);
+    printf("enter t : ");
+    scanf("%f", &t);
+    printf("simple interest : %f\n", (p*r*t/100));
+    printf("compound interest : %f\n", (p*pow((1+r/100),t)));
+    return 0;
+}
+// 10: Online C compiler to run C program online
+#include <stdio.h>
+
+int main() {
+   int h, m, s;  // h = hours; m = minutes; s = seconds
+   printf("enter s : ");
+   scanf("%d", &s);
+   h = s / 3600;
+   s = s % 3600;
+   m = s / 60;
+   s = s % 60;
+   printf("t = %02d:%02d:%02d\n", h,m,s);
+   
+   
+    return 0;
+}
