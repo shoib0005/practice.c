@@ -1,0 +1,391 @@
+// 21: Write a program to display the month name and number of days using switch-case for a given month number.
+#include <stdio.h>
+int main() {
+    int month;
+    printf("enter month : ");
+    scanf("%d", &month);
+    switch (month) {
+        case 1: printf("January\n 31 days\n");
+              break;
+        case 2: printf("February\n 28 days\n");
+              break;
+        case 3: printf("March\n 31 days\n");
+              break;
+        case 4: printf("April\n 30 days\n");
+              break;
+        case 5: printf("May\n 31 days\n");
+              break;
+        case 6: printf("June\n 30 days\n");
+              break;
+        case 7: printf("July\n 31 days\n");
+              break;
+        case 8: printf("August\n 31 days\n");
+              break;
+        case 9: printf("September\n 30 days\n");
+              break;
+        case 10: printf("October\n 31 days\n");
+              break;
+        case 11: printf("November\n 30 days\n");
+              break;
+        case 12: printf("December\n 31 days\n");
+              break;
+    }
+    return 0;
+}
+
+// 22: Write a program to find profit or loss percentage given cost price and selling price
+#include <stdio.h>
+int main() {
+    float cp, sp;
+    printf("enter cp : ");
+    scanf("%f", &cp);
+    printf("enter sp : ");
+    scanf("%f", &sp);
+    if(sp>cp) {
+        printf("Profit % : %f\n", (sp-cp)/cp*100);
+    } else if(cp>sp) {
+        printf("Loss % : %f\n", (cp-sp)/cp*100);
+    } 
+    else {
+        printf("on profit no loss");
+    }
+    return 0;
+}
+
+// 23: Write a program to calculate a library fine based on late days
+#include <stdio.h>
+int main() {
+    int DaysAlloted, DaysKept;
+    printf("enter DaysAlloted : ");
+    scanf("%d", &DaysAlloted);
+    printf("enter DaysKept : ");
+    scanf("%d", &DaysKept);
+  
+    if(DaysKept > DaysAlloted) {
+        printf("Fine (late days*100) : %d\n", (DaysKept-DaysAlloted)*100);
+    } else if(DaysKept < DaysAlloted) {
+        printf("Days left : %d\n", DaysAlloted-DaysKept);
+    } 
+    return 0;
+}
+
+// 24: Write a program to calculate an electricity bill based on units consumed
+#include <stdio.h>
+int main() {
+    int units;
+    printf("enter units consumed : ");
+    scanf("%d", &units);
+   printf("   Amount to be paid : %d\n", units*15);
+    return 0;
+}
+
+// 25: Write a program to implement a basic calculator using switch-case for +, -, *, /, %.
+#include <stdio.h>
+int main() {
+    int x, y;
+    char op;
+    printf("enter x : ");
+    scanf("%d", &x);
+    printf("enter y : ");
+    scanf("%d", &y);
+    printf("enter operator (+,-,*,/,%) : ");
+    scanf(" %c", &op);    
+    switch(op) {
+        case '+' : printf("%d\n", x + y);
+              break ;
+        case '-' : printf("%d\n", x - y);
+              break ;
+        case '*' : printf("%d\n", x * y);
+             break ;
+        case '/' : printf("%d\n", x / y);
+             break ;
+        case '%' : printf("%d\n", x % y);
+             break ;
+    }
+    return 0;
+}
+
+// 26: Write a program to print numbers from 1 to n.
+#include <stdio.h>
+int main() {
+    int n;
+    printf("enter n : ");
+    scanf("%d", &n);
+   for(int i =1; i<=n; i++) {
+       printf("%d\n", i);
+   }
+    return 0;
+}
+
+// 27: Write a program to print the sum of the first n odd numbers.
+#include <stdio.h>
+#include<math.h>
+int main() {
+  int n, sum=0;
+  printf("enter n : ");
+  scanf("%d", &n);
+ for(int i=1; i<=n; i=i+2) {
+     sum = sum + i;
+     printf("%d\n", sum);
+ }
+ 
+  
+    return 0;
+}
+
+//28: Write a program to print the product of even numbers from 1 to n
+#include <stdio.h>
+int main() {
+   int n;
+   printf("enter n : ");
+   scanf("%d", &n);
+   long long product = 1;
+   for(int i =2; i<=n; i=i+2) {
+         product = product * i;
+       printf("product is %d\n", product);
+     
+   }
+
+    return 0;
+}
+
+// 29: Write a program to calculate the factorial of a number
+#include <stdio.h>
+int main() {
+    int n, fact=1;
+    printf("enter n : ");
+    scanf("%d", &n);
+    for(int i=1; i<=n; i++) {
+        fact = fact*i;
+    }
+      printf("%d\n", fact);
+  
+    return 0;
+}
+
+// 30:Online C compiler to run C program online
+#include <stdio.h>
+int main() {
+int n, r, rev=0;  
+ printf("enter n : ");
+ scanf("%d", &n);
+ while(n!=0) {
+     r=n%10;
+     rev=rev*10+r;
+     n=n/10;
+ }
+ printf("reversed number is : %d", rev);
+    return 0;
+}
+
+
+// 31. EQUIVALENT BINARY REPRESENTATION
+#include <stdio.h>
+int main() {
+    int n, r, rev = 0;
+    printf("Enter number: ");
+    scanf("%d", &n);
+
+    int num = n;
+
+    while(n > 0){
+        r = n % 2;
+        rev = rev * 10 + r;
+        n /= 2;
+    }
+
+    // reverse again to print correct binary
+    int bin = 0;
+    while(rev > 0){
+        bin = bin * 10 + rev % 10;
+        rev /= 10;
+    }
+
+    printf("Binary = %d", bin);
+}
+
+// 32. palindrome
+#include <stdio.h>
+
+int main() {
+    int num, original, reversed = 0, digit;
+
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    original = num;  // Store original number
+
+    // Reverse the number
+    while (num > 0) {
+        digit = num % 10;              // Get last digit
+        reversed = reversed * 10 + digit; // Append digit to reversed number
+        num = num / 10;                // Remove last digit
+    }
+
+    // Check palindrome
+    if (original == reversed) {
+        printf("The number is a palindrome.\n");
+    } else {
+        printf("The number is not a palindrome.\n");
+    }
+
+    return 0;
+}
+
+// 33. armstrong
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int num, original, digits = 0;
+    int sum = 0, temp, remainder;
+
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    original = num;
+    temp = num;
+
+    // Count number of digits
+    while (temp != 0) {
+        temp /= 10;
+        digits++;
+    }
+
+    temp = num;
+
+    // Calculate sum of each digit raised to 'digits'
+    while (temp != 0) {
+        remainder = temp % 10;
+        sum += pow(remainder, digits);
+        temp /= 10;
+    }
+
+    // Check Armstrong condition
+    if (sum == original) {
+        printf("%d is an Armstrong number.\n", original);
+    } else {
+        printf("%d is not an Armstrong number.\n", original);
+    }
+
+    return 0;
+}
+
+// 34. prime number
+#include <stdio.h>
+int main() {
+    int n, i, flag = 1;
+    scanf("%d", &n);
+
+    for(i = 2; i < n; i++){
+        if(n % i == 0){
+            flag = 0;
+            break;
+        }
+    }
+
+    if(n < 2) printf("Not Prime");
+    else if(flag) printf("Prime");
+    else printf("Not Prime");
+}
+
+// 35. factors
+#include <stdio.h>
+int main() {
+    int n, i;
+    scanf("%d", &n);
+
+    for(i = 1; i <= n; i++){
+        if(n % i == 0) printf("%d ", i);
+    }
+}
+
+// 36. HCF
+#include <stdio.h>
+int main() {
+    int a, b;
+    scanf("%d %d", &a, &b);
+
+    while(a != b){
+        if(a > b) a = a - b;
+        else b = b - a;
+    }
+
+    printf("HCF = %d", a);
+}
+
+// 37. LCM
+#include <stdio.h>
+int main() {
+    int a, b, x, y;
+    scanf("%d %d", &a, &b);
+
+    x = a; y = b;
+
+    while(a != b){
+        if(a > b) a -= b;
+        else b -= a;
+    }
+
+    int hcf = a;
+    int lcm = (x * y) / hcf;
+
+    printf("LCM = %d", lcm);
+}
+
+// 38. sum of digits
+#include <stdio.h>
+int main() {
+    int n, sum = 0;
+    scanf("%d", &n);
+
+    while(n > 0){
+        sum += n % 10;
+        n /= 10;
+    }
+
+    printf("Sum = %d", sum);
+}
+
+// 39. product of odd digit of a number.
+#include <stdio.h>
+int main() {
+    int n, r, prod = 1, found = 0;
+    scanf("%d", &n);
+
+    while(n > 0){
+        r = n % 10;
+        if(r % 2 == 1){
+            prod *= r;
+            found = 1;
+        }
+        n /= 10;
+    }
+
+    if(found) printf("Product = %d", prod);
+    else printf("No odd digits");
+}
+
+// 40. find the 1's complement of a binary number.
+#include <stdio.h>
+int main() {
+    int n, r, rev = 0;
+
+    scanf("%d", &n);
+
+    while(n > 0){
+        r = n % 10;
+        if(r == 0) r = 1;
+        else r = 0;
+        rev = rev * 10 + r;
+        n /= 10;
+    }
+
+    int ans = 0;
+    while(rev > 0){
+        ans = ans * 10 + rev % 10;
+        rev /= 10;
+    }
+
+    printf("1's Complement = %d", ans);
+}
