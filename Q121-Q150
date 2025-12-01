@@ -1,0 +1,678 @@
+// Q121 — Create file & write name/age using fprintf()
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char name[50];
+    int age;
+
+    fp = fopen("info.txt", "w");
+    if (fp == NULL) {
+        printf("Error creating file!\n");
+        return 1;
+    }
+
+    printf("Enter your name: ");
+    fgets(name, sizeof(name), stdin);
+    printf("Enter your age: ");
+    scanf("%d", &age);
+
+    fprintf(fp, "Name: %sAge: %d\n", name, age);
+    fclose(fp);
+
+    printf("Data successfully saved to info.txt\n");
+    return 0;
+}
+
+// Q122 — Read existing file using fgets()
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char line[100];
+
+    fp = fopen("info.txt", "r");
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        printf("%s", line);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+// Q123 — Count characters, words, lines
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *fp;
+    char ch;
+    int chars = 0, words = 0, lines = 0, inWord = 0;
+
+    fp = fopen("info.txt", "r");
+    if (fp == NULL) {
+        printf("File not found!\n");
+        return 1;
+    }
+
+    while ((ch = fgetc(fp)) != EOF) {
+        chars++;
+
+        if (ch == '\n')
+            lines++;
+
+        if (isspace(ch))
+            inWord = 0;
+        else if (inWord == 0) {
+            words++;
+            inWord = 1;
+        }
+    }
+
+    fclose(fp);
+
+    printf("Characters: %d\nWords: %d\nLines: %d\n", chars, words, lines);
+    return 0;
+}
+
+// Q124 — Copy file using fgetc() and fputc()
+#include <stdio.h>
+
+int main() {
+    FILE *src, *dest;
+    char srcFile[50], destFile[50];
+    int ch;
+
+    printf("Enter source filename: ");
+    scanf("%s", srcFile);
+
+    printf("Enter destination filename: ");
+    scanf("%s", destFile);
+
+    src = fopen(srcFile, "r");
+    if (src == NULL) {
+        printf("Source file not found!\n");
+        return 1;
+    }
+
+    dest = fopen(destFile, "w");
+
+    while ((ch = fgetc(src)) != EOF) {
+        fputc(ch, dest);
+    }
+
+    fclose(src);
+    fclose(dest);
+
+    printf("File copied successfully.\n");
+    return 0;
+}
+
+// Q125 — Append text to a file
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char text[200];
+
+    fp = fopen("info.txt", "a");
+    if (fp == NULL) {
+        printf("File not found!\n");
+        return 1;
+    }
+
+    printf("Enter text to append: ");
+    getchar(); // clear buffer
+    fgets(text, sizeof(text), stdin);
+
+    fputs(text, fp);
+    fclose(fp);
+
+    printf("Text appended successfully.\n");
+    return 0;
+}
+
+// Q126 — Check if file exists & display content
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char filename[50], ch;
+
+    printf("Enter filename: ");
+    scanf("%s", filename);
+
+    fp = fopen(filename, "r");
+
+    if (fp == NULL) {
+        printf("Error: File does not exist!\n");
+        return 1;
+    }
+
+    while ((ch = fgetc(fp)) != EOF)
+        putchar(ch);
+
+    fclose(fp);
+    return 0;
+}
+
+// Q127 — Convert lowercase → uppercase (input.txt → output.txt)
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *in, *out;
+    char ch;
+
+    in = fopen("input.txt", "r");
+    out = fopen("output.txt", "w");
+
+    if (!in || !out) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    while ((ch = fgetc(in)) != EOF) {
+        fputc(toupper(ch), out);
+    }
+
+    fclose(in);
+    fclose(out);
+
+    printf("Conversion complete. Check output.txt\n");
+    return 0;
+}
+
+// Q128 — Count vowels & consonants
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *fp;
+    char ch;
+    int vowels = 0, consonants = 0;
+
+    fp = fopen("info.txt", "r");
+    if (!fp) {
+        printf("File not found!\n");
+        return 1;
+    }
+
+    while ((ch = fgetc(fp)) != EOF) {
+        ch = tolower(ch);
+        if (ch >= 'a' && ch <= 'z') {
+            if (ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u')
+                vowels++;
+            else
+                consonants++;
+        }
+    }
+
+    fclose(fp);
+    printf("Vowels: %d\nConsonants: %d\n", vowels, consonants);
+    return 0;
+}
+
+// Q129 — Sum & average of integers in file
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    int num, sum = 0, count = 0;
+
+    fp = fopen("numbers.txt", "r");
+    if (!fp) {
+        printf("File not found!\n");
+        return 1;
+    }
+
+    while (fscanf(fp, "%d", &num) == 1) {
+        sum += num;
+        count++;
+    }
+
+    fclose(fp);
+
+    printf("Sum = %d\nAverage = %.2f\n", sum, (count ? (float)sum/count : 0));
+    return 0;
+}
+
+// Q130 — Store & read multiple student records
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int roll;
+    float marks;
+};
+
+int main() {
+    FILE *fp;
+    struct Student s;
+    int n, i;
+
+    fp = fopen("students.txt", "w");
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        printf("Enter name, roll, marks: ");
+        scanf("%s %d %f", s.name, &s.roll, &s.marks);
+        fprintf(fp, "%s %d %.2f\n", s.name, s.roll, s.marks);
+    }
+    fclose(fp);
+
+    fp = fopen("students.txt", "r");
+    printf("\nStored Records:\n");
+
+    while (fscanf(fp, "%s %d %f", s.name, &s.roll, &s.marks) == 3) {
+        printf("%s  %d  %.2f\n", s.name, s.roll, s.marks);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+// Q131 — Enum for days
+#include <stdio.h>
+
+enum Days { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };
+
+int main() {
+    for (int d = SUNDAY; d <= SATURDAY; d++)
+        printf("%d: %d\n", d, d);
+    return 0;
+}
+
+// Q132 — Traffic lights
+#include <stdio.h>
+
+enum Light { RED, YELLOW, GREEN };
+
+int main() {
+    enum Light signal = RED;
+
+    if (signal == RED) printf("Stop\n");
+    else if (signal == YELLOW) printf("Wait\n");
+    else printf("Go\n");
+
+    return 0;
+}
+
+// Q133 — Enum months & days
+#include <stdio.h>
+
+enum Month { JAN=1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC };
+
+int main() {
+    int days[] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+    
+    for (int m = JAN; m <= DEC; m++)
+        printf("Month %d has %d days\n", m, days[m]);
+
+    return 0;
+}
+
+// Q134 — SUCCESS, FAILURE, TIMEOUT
+#include <stdio.h>
+
+enum Status { SUCCESS, FAILURE, TIMEOUT };
+
+int main() {
+    enum Status s = TIMEOUT;
+
+    switch (s) {
+        case SUCCESS: printf("Operation Successful!\n"); break;
+        case FAILURE: printf("Operation Failed!\n"); break;
+        case TIMEOUT: printf("Operation Timed Out!\n"); break;
+    }
+
+    return 0;
+}
+
+// Q135 — Explicit values starting from 10
+#include <stdio.h>
+
+enum Numbers { A = 10, B, C, D };
+
+int main() {
+    printf("%d %d %d %d\n", A, B, C, D);
+    return 0;
+}
+
+// Q136 — Enum menu choices
+#include <stdio.h>
+
+enum Menu { ADD = 1, SUBTRACT, MULTIPLY };
+
+int main() {
+    int choice, a, b;
+
+    printf("1.Add  2.Subtract  3.Multiply\nEnter choice: ");
+    scanf("%d", &choice);
+
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b);
+
+    switch(choice) {
+        case ADD: printf("Result = %d\n", a + b); break;
+        case SUBTRACT: printf("Result = %d\n", a - b); break;
+        case MULTIPLY: printf("Result = %d\n", a * b); break;
+        default: printf("Invalid choice\n");
+    }
+    return 0;
+}
+
+// Q137 — User roles
+#include <stdio.h>
+
+enum Role { ADMIN, USER, GUEST };
+
+int main() {
+    enum Role r = USER;
+
+    switch (r) {
+        case ADMIN: printf("You have full access.\n"); break;
+        case USER:  printf("You have limited access.\n"); break;
+        case GUEST: printf("You have guest access.\n"); break;
+    }
+    return 0;
+}
+
+// Q138 — Print all enum values in loop
+#include <stdio.h>
+
+enum Color { RED2, GREEN2, BLUE2, YELLOW2 };
+
+int main() {
+    for (int c = RED2; c <= YELLOW2; c++)
+        printf("Enum value: %d\n", c);
+    return 0;
+}
+
+// Q139 — Show enums are integers
+#include <stdio.h>
+
+enum Example { X=3, Y=7, Z=12 };
+
+int main() {
+    printf("X=%d Y=%d Z=%d\n", X, Y, Z);
+    return 0;
+}
+
+// Q140 — Struct with enum Gender
+#include <stdio.h>
+
+enum Gender { MALE, FEMALE, OTHER };
+
+struct Person {
+    char name[50];
+    enum Gender g;
+};
+
+int main() {
+    struct Person p = {"Rahul", MALE};
+
+    printf("Name: %s\n", p.name);
+
+    if (p.g == MALE) printf("Gender: Male\n");
+    else if (p.g == FEMALE) printf("Gender: Female\n");
+    else printf("Gender: Other\n");
+
+    return 0;
+}
+
+// Q141 — Structure Student (read & print one student)
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int roll_no;
+    float marks;
+};
+
+int main() {
+    struct Student s;
+
+    printf("Enter name: ");
+    scanf("%s", s.name);
+
+    printf("Enter roll number: ");
+    scanf("%d", &s.roll_no);
+
+    printf("Enter marks: ");
+    scanf("%f", &s.marks);
+
+    printf("\n--- Student Details ---\n");
+    printf("Name: %s\nRoll: %d\nMarks: %.2f\n", s.name, s.roll_no, s.marks);
+
+    return 0;
+}
+
+// Q142 — Store 5 students in array of structures
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int roll_no;
+    float marks;
+};
+
+int main() {
+    struct Student s[5];
+
+    for (int i = 0; i < 5; i++) {
+        printf("Enter name, roll, marks of student %d: ", i+1);
+        scanf("%s %d %f", s[i].name, &s[i].roll_no, &s[i].marks);
+    }
+
+    printf("\n--- Student Records ---\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%s  %d  %.2f\n", s[i].name, s[i].roll_no, s[i].marks);
+    }
+
+    return 0;
+}
+
+// Q143 — Student with highest marks
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int roll;
+    float marks;
+};
+
+int main() {
+    struct Student s[5];
+    int i, top = 0;
+
+    for (i = 0; i < 5; i++) {
+        printf("Enter name, roll, marks of student %d: ", i+1);
+        scanf("%s %d %f", s[i].name, &s[i].roll, &s[i].marks);
+    }
+
+    for (i = 1; i < 5; i++) {
+        if (s[i].marks > s[top].marks)
+            top = i;
+    }
+
+    printf("\nTop Student:\n");
+    printf("%s  %d  %.2f\n", s[top].name, s[top].roll, s[top].marks);
+
+    return 0;
+}
+
+// Q144 — Function that accepts structure and prints members
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int roll;
+    float marks;
+};
+
+void display(struct Student s) {
+    printf("\n--- Student Data ---\n");
+    printf("Name: %s\nRoll: %d\nMarks: %.2f\n", s.name, s.roll, s.marks);
+}
+
+int main() {
+    struct Student s;
+
+    printf("Enter name, roll, marks: ");
+    scanf("%s %d %f", s.name, &s.roll, &s.marks);
+
+    display(s);
+
+    return 0;
+}
+
+// Q145 — Function returns structure (top student)
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int roll;
+    float marks;
+};
+
+struct Student getTop(struct Student s[], int n) {
+    int top = 0;
+    for (int i = 1; i < n; i++)
+        if (s[i].marks > s[top].marks)
+            top = i;
+    return s[top];
+}
+
+int main() {
+    struct Student s[5], topper;
+
+    for (int i = 0; i < 5; i++) {
+        printf("Enter name, roll, marks of student %d: ", i+1);
+        scanf("%s %d %f", s[i].name, &s[i].roll, &s[i].marks);
+    }
+
+    topper = getTop(s, 5);
+
+    printf("\nTop Student:\n%s %d %.2f\n", topper.name, topper.roll, topper.marks);
+
+    return 0;
+}
+
+// Q146 — Employee with nested Date structure
+#include <stdio.h>
+
+struct Date {
+    int day, month, year;
+};
+
+struct Employee {
+    char name[50];
+    int id;
+    struct Date joining;
+};
+
+int main() {
+    struct Employee e;
+
+    printf("Enter name and id: ");
+    scanf("%s %d", e.name, &e.id);
+
+    printf("Enter joining date (dd mm yyyy): ");
+    scanf("%d %d %d", &e.joining.day, &e.joining.month, &e.joining.year);
+
+    printf("\n--- Employee Details ---\n");
+    printf("Name: %s\nID: %d\nJoining: %02d-%02d-%04d\n",
+           e.name, e.id, e.joining.day, e.joining.month, e.joining.year);
+
+    return 0;
+}
+
+// Q147 — Store employee data in binary file (fwrite & fread)
+#include <stdio.h>
+
+struct Employee {
+    char name[50];
+    int id;
+    float salary;
+};
+
+int main() {
+    struct Employee e1, e2;
+    FILE *fp;
+
+    printf("Enter name, id, salary: ");
+    scanf("%s %d %f", e1.name, &e1.id, &e1.salary);
+
+    fp = fopen("emp.dat", "wb");
+    fwrite(&e1, sizeof(e1), 1, fp);
+    fclose(fp);
+
+    fp = fopen("emp.dat", "rb");
+    fread(&e2, sizeof(e2), 1, fp);
+    fclose(fp);
+
+    printf("\n--- Employee Data from File ---\n");
+    printf("%s %d %.2f\n", e2.name, e2.id, e2.salary);
+
+    return 0;
+}
+
+// Q148 — Compare two structures
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    char name[50];
+    int roll;
+    float marks;
+};
+
+int main() {
+    struct Student a, b;
+
+    printf("Enter first student's name, roll, marks: ");
+    scanf("%s %d %f", a.name, &a.roll, &a.marks);
+
+    printf("Enter second student's name, roll, marks: ");
+    scanf("%s %d %f", b.name, &b.roll, &b.marks);
+
+    if (strcmp(a.name, b.name)==0 && a.roll == b.roll && a.marks == b.marks)
+        printf("Both structures are identical.\n");
+    else
+        printf("Structures are NOT identical.\n");
+
+    return 0;
+}
+
+// Q149 — Dynamic memory allocation for structure (malloc)
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Student {
+    char name[50];
+    int roll;
+    float marks;
+};
+
+int main() {
+    struct Student *s;
+
+    s = (struct Student*) malloc(sizeof(struct Student));
+
+    printf("Enter name, roll, marks: ");
+    scanf("%s %d %f", s->name, &s->roll, &s->marks);
+
+    printf("\n--- Student Details ---\n");
+    printf("%s  %d  %.2f\n", s->name, s->roll, s->marks);
+
+    free(s);
+
+    return 0;
+}
